@@ -18,3 +18,7 @@
 - Single State Tree
 - Hot Reloading
 - Time Travel
+
+## Materials
+- [Vuex](https://github.com/vuejs/vuex)
+- [Vuex docs](http://vuex.vuejs.org/en/intro.html)
