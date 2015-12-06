@@ -1,0 +1,109 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'd:\\Program Files\\node\\nodejs\\node.exe',
+1 verbose cli   'd:\\Program Files\\node\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install' ]
+2 info using npm@2.5.1
+3 info using node@v0.12.0
+4 verbose install where, deps [ 'd:\\workspace\\vuex',
+4 verbose install   [ 'babel-core',
+4 verbose install     'babel-loader',
+4 verbose install     'babel-plugin-add-module-exports',
+4 verbose install     'babel-plugin-transform-runtime',
+4 verbose install     'babel-polyfill',
+4 verbose install     'babel-preset-es2015',
+4 verbose install     'babel-preset-stage-2',
+4 verbose install     'babel-runtime',
+4 verbose install     'chai',
+4 verbose install     'css-loader',
+4 verbose install     'eslint',
+4 verbose install     'mocha',
+4 verbose install     'style-loader',
+4 verbose install     'todomvc-app-css',
+4 verbose install     'vue',
+4 verbose install     'vue-hot-reload-api',
+4 verbose install     'vue-html-loader',
+4 verbose install     'vue-loader',
+4 verbose install     'webpack',
+4 verbose install     'webpack-dev-server' ] ]
+5 verbose install where, peers [ 'd:\\workspace\\vuex', [] ]
+6 info preinstall vuex@0.1.0
+7 warn package.json babel-polyfill@6.3.14 No description
+8 verbose already installed skipping vue-hot-reload-api@^1.2.1 d:\workspace\vuex
+9 verbose already installed skipping vue-html-loader@^1.0.0 d:\workspace\vuex
+10 verbose already installed skipping vue-loader@^7.1.1 d:\workspace\vuex
+11 verbose already installed skipping webpack@^1.12.8 d:\workspace\vuex
+12 verbose already installed skipping webpack-dev-server@^1.12.1 d:\workspace\vuex
+13 verbose already installed skipping babel-core@^6.2.1 d:\workspace\vuex
+14 verbose already installed skipping babel-loader@^6.2.0 d:\workspace\vuex
+15 verbose already installed skipping babel-plugin-add-module-exports@^0.1.1 d:\workspace\vuex
+16 verbose already installed skipping babel-plugin-transform-runtime@^6.1.18 d:\workspace\vuex
+17 verbose already installed skipping babel-polyfill@^6.2.0 d:\workspace\vuex
+18 verbose already installed skipping babel-preset-es2015@^6.1.18 d:\workspace\vuex
+19 verbose already installed skipping babel-preset-stage-2@^6.1.18 d:\workspace\vuex
+20 verbose already installed skipping babel-runtime@^6.2.0 d:\workspace\vuex
+21 verbose already installed skipping chai@^3.4.1 d:\workspace\vuex
+22 verbose already installed skipping css-loader@^0.21.0 d:\workspace\vuex
+23 verbose already installed skipping eslint@^1.10.2 d:\workspace\vuex
+24 verbose already installed skipping mocha@^2.3.4 d:\workspace\vuex
+25 verbose already installed skipping style-loader@^0.13.0 d:\workspace\vuex
+26 verbose already installed skipping todomvc-app-css@^2.0.3 d:\workspace\vuex
+27 verbose already installed skipping vue@^1.0.8 d:\workspace\vuex
+28 silly install resolved []
+29 info build d:\workspace\vuex
+30 verbose linkStuff [ false, false, false, 'd:\\workspace' ]
+31 info linkStuff vuex@0.1.0
+32 verbose linkBins vuex@0.1.0
+33 verbose linkMans vuex@0.1.0
+34 verbose rebuildBundles vuex@0.1.0
+35 verbose rebuildBundles [ '.bin',
+35 verbose rebuildBundles   'babel-core',
+35 verbose rebuildBundles   'babel-loader',
+35 verbose rebuildBundles   'babel-plugin-add-module-exports',
+35 verbose rebuildBundles   'babel-plugin-transform-runtime',
+35 verbose rebuildBundles   'babel-polyfill',
+35 verbose rebuildBundles   'babel-preset-es2015',
+35 verbose rebuildBundles   'babel-preset-stage-2',
+35 verbose rebuildBundles   'babel-runtime',
+35 verbose rebuildBundles   'chai',
+35 verbose rebuildBundles   'css-loader',
+35 verbose rebuildBundles   'eslint',
+35 verbose rebuildBundles   'mocha',
+35 verbose rebuildBundles   'style-loader',
+35 verbose rebuildBundles   'todomvc-app-css',
+35 verbose rebuildBundles   'vue',
+35 verbose rebuildBundles   'vue-hot-reload-api',
+35 verbose rebuildBundles   'vue-html-loader',
+35 verbose rebuildBundles   'vue-loader',
+35 verbose rebuildBundles   'webpack',
+35 verbose rebuildBundles   'webpack-dev-server' ]
+36 info install vuex@0.1.0
+37 info postinstall vuex@0.1.0
+38 info prepublish vuex@0.1.0
+39 verbose unsafe-perm in lifecycle true
+40 info vuex@0.1.0 Failed to exec prepublish script
+41 verbose stack Error: vuex@0.1.0 prepublish: `babel src --out-dir lib --presets es2015 --plugins add-module-exports`
+41 verbose stack Exit status 1
+41 verbose stack     at EventEmitter.<anonymous> (d:\Program Files\node\nodejs\node_modules\npm\lib\utils\lifecycle.js:213:16)
+41 verbose stack     at EventEmitter.emit (events.js:110:17)
+41 verbose stack     at ChildProcess.<anonymous> (d:\Program Files\node\nodejs\node_modules\npm\lib\utils\spawn.js:14:12)
+41 verbose stack     at ChildProcess.emit (events.js:110:17)
+41 verbose stack     at maybeClose (child_process.js:1008:16)
+41 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:1080:5)
+42 verbose pkgid vuex@0.1.0
+43 verbose cwd d:\workspace\vuex
+44 error Windows_NT 6.1.7601
+45 error argv "d:\\Program Files\\node\\nodejs\\node.exe" "d:\\Program Files\\node\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install"
+46 error node v0.12.0
+47 error npm  v2.5.1
+48 error code ELIFECYCLE
+49 error vuex@0.1.0 prepublish: `babel src --out-dir lib --presets es2015 --plugins add-module-exports`
+49 error Exit status 1
+50 error Failed at the vuex@0.1.0 prepublish script 'babel src --out-dir lib --presets es2015 --plugins add-module-exports'.
+50 error This is most likely a problem with the vuex package,
+50 error not with npm itself.
+50 error Tell the author that this fails on your system:
+50 error     babel src --out-dir lib --presets es2015 --plugins add-module-exports
+50 error You can get their info via:
+50 error     npm owner ls vuex
+50 error There is likely additional logging output above.
+51 verbose exit [ 1, true ]
