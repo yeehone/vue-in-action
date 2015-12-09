@@ -27,64 +27,82 @@ export default {
 			console.log(node);
 			var src = node.getAttribute('data-src');
 			if(src) {
-				node.setAttribute('data-src', '');
+				node.removeAttribute('data-src');
 				node.src = src;
 			}
 		}
 	},
 	directives: {
 		'exposure': {
-			timer: null,
-			windowHeight: document.documentElement.clientHeight,
-			windowWidth: document.documentElement.clientWidth,
+			opts: {},
+			params: ['exposure-opt'],
+			checkInview: function(node) {
+				var rect = node.getBoundingClientRect();
+				console.log('directives[exposure]: checkInview, rect: ', rect, 'clientHeight: ', document.documentElement.clientHeight);
+				return rect.width && rect.height && rect.top >= 0 && rect.top <= document.documentElement.clientHeight;
+			},
+			dealExposures: function() {
+				for (var selector in this.opts) {
+					var opt = this.opts[selector];
+					var arr = opt.arr;
+					var fn = this.vm.$options.methods[opt.dealMethod];
+					for (var i = 0, length = arr.length, one; i < length && (one = arr[i]); i++) {
+						if(one.getAttribute('data-is-exposed') == 1) continue;
+						if (this.checkInview(one)) {
+							typeof fn == 'function' && fn.call(this, one);
+							!opt.always && one.setAttribute('data-is-exposed', 1);
+						}
+					}
+				}
+			},
+			dispatchScrollEvt: function() {
+				var last;
+				var timer;
+				var threshold = 200;
+				var context = this;
+				var args = arguments;
+				var now = +new Date();
+				var fn = this.dealExposures;
+
+				if(last && now < last + threshold){
+					clearTimeout(timer);
+					timer = setTimeout(function(){
+						last = now;
+						fn && fn.apply(context, args);
+					}, threshold);
+				}else{
+					last = now;
+					fn && fn.apply(context, args);
+				}
+			},
 			bindEvent: function(opt) {
 				var that = this;
 				if(!opt.selector || !opt.domUpdateTrigger || !opt.dealMethod) {
 					return;
 				}
-				that.vm.$nextTick(function() {
-					var arr = that.vm.$el.querySelectorAll(opt.selector);
-
-					window.addEventListener('scroll', that.dealExposures(arr, opt), false);
+				this.opts[opt.selector] = opt;
+				this.vm.$nextTick(function() {
+					opt.arr = that.vm.$el.querySelectorAll(opt.selector);
+					that.dispatchScrollEvt();
 				});
+				window.addEventListener('scroll', this.dispatchScrollEvt.bind(this), false);
 			},
-			checkInview: function(node) {
-				var rect = node.getBoundingClientRect();
-				console.log('directives[exposure]: checkInview, rect: ', rect, 'clientHeight: ', document.documentElement.clientHeight);
-				return rect.width && rect.height && rect.top > 0 && rect.top < document.documentElement.clientHeight;
-			},
-			dealExposures: function(arr, opt) {
-				var that = this;
-				return function(e) {
-					if(that.timer) {return}
-					that.timer = setTimeout(function() {
-						for(var i = 0; i < arr.length; i++) {
-							if(that.checkInview(arr[i])) {
-								var m = that.vm.$options.methods[opt.dealMethod];
-								typeof m == 'function' && m.call(that, arr[i]);
-							}
-						}
-						that.timer = 0;
-					}, 200);
-				}
-			},
-			params: ['exposure-opt'], 
 			bind: function() {
 				console.log('directives[exposure]: bind', this, arguments);
 				var exposureOpt = this.params && this.params['exposureOpt'];
-				if(exposureOpt) {
-					if(Array.prototype.toString.call(exposureOpt) == '[object Array]') {
-						for(var i = 0; i < exposureOpt.length; i++) {
+				if (exposureOpt) {
+					if (Array.prototype.toString.call(exposureOpt) == '[object Array]') {
+						for (var i = 0; i < exposureOpt.length; i++) {
 							this.bindEvent.call(this, exposureOpt[i]);
 						}
-					} else if(Object.prototype.toString.call(exposureOpt) == '[object Object]') {
+					} else if (Object.prototype.toString.call(exposureOpt) == '[object Object]') {
 						this.bindEvent.call(this, exposureOpt);
 					}
-				} else if(this.expression) {
+				} else if (this.expression) {
 					var opt = {};
 					try {
 						opt = JSON.parse(this.expression || {});
-					} catch(e) {}
+					} catch (e) {}
 					this.bindEvent.call(this, opt);
 				} else {
 					this.bindEvent.call(this, {
@@ -94,12 +112,12 @@ export default {
 					});
 				}
 			},
-			update: function(){
+			update: function() {
 				console.log('directives[exposure]: update', this, arguments);
 			},
-			unbind: function(){
+			unbind: function() {
 				console.log('directives[exposure]: unbind', this, arguments);
-				window.removeEventListener('scroll', this.dealExposures, false);
+				window.removeEventListener('scroll', this.dispatchScrollEvt.bind(this), false);
 			}
 		}
 	}
