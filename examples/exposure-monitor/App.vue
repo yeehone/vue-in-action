@@ -51,7 +51,7 @@ export default {
 				console.log('directives[exposure]: checkInview, rect: ', rect, 'clientHeight: ', document.documentElement.clientHeight);
 				return rect.width && rect.height && rect.top >= 0 && rect.top <= document.documentElement.clientHeight;
 			},
-			dealExposures: Util.debounce(function() {
+			dealExposures: function() {
 				for (var selector in this.opts) {
 					var opt = this.opts[selector];
 					console.log('directives[exposure]: dealExposures opt', opt);
@@ -65,7 +65,7 @@ export default {
 						}
 					}
 				}
-			}, 0),
+			},
 			getDomNodes: function(opt) {
 				return this.vm.$el.querySelectorAll(opt.selector);
 			},
@@ -78,7 +78,7 @@ export default {
 				var domUpdate = function() {
 					console.log('directives[exposure]: domUpdate opt: ', opt);
 					opt.arr = this.getDomNodes(opt);
-					this.dealExposures();
+					this.debounceDealExposures();
 				};
 				
 				var unwatch = this.vm.$watch(opt.domUpdateTrigger, function() {
@@ -92,12 +92,13 @@ export default {
 				this.vm.$nextTick(function() {
 					domUpdate.call(that);
 				});
-				
-				window.addEventListener('scroll', this.dealExposures.bind(this), false);
-				window.addEventListener('resize', this.dealExposures.bind(this), false);
 			},
 			bind: function() {
 				console.log('directives[exposure]: bind', this, arguments);
+
+				this.debounceDealExposures = Util.debounce(this.dealExposures, 0);
+				this.throttleDealExposures = Util.throttle(this.dealExposures, 0);
+
 				var exposureOpt = this.params && this.params['exposureOpt'];
 				if (exposureOpt) {
 					if (Object.prototype.toString.call(exposureOpt) == '[object Array]') {
@@ -114,6 +115,9 @@ export default {
 					} catch (e) {}
 					this.bindEvent.call(this, opt);
 				}
+
+				window.addEventListener('scroll', this.throttleDealExposures.bind(this), false);
+				window.addEventListener('resize', this.throttleDealExposures.bind(this), false);
 			},
 			update: function() {
 				console.log('directives[exposure]: update', this, arguments);
