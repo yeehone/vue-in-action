@@ -26,7 +26,6 @@ $ npm run counter # run the counter example
 ```
 
 See [npm scripts](https://github.com/vuejs/vuex/blob/master/package.json#L11-L15) for all example npm scripts.
->>>>>>> oriVuex/master
 
 ## Principles
 
