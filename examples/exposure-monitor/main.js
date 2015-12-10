@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-new Vue({
+Vue.config.debug = true
+
+window.test = new Vue({
   el: 'body',
   components: { App }
 })
