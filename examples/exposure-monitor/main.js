@@ -1,4 +1,3 @@
-import Vue from 'vue'
 
 import App from './App.vue'
 import ExposureMonitor from './exposure-monitor.js'

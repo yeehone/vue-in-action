@@ -10,6 +10,7 @@
   "scripts": {
     "counter": "cd examples/counter && webpack-dev-server --inline --hot --config ../webpack.shared.config.js",
     "exposure-monitor": "cd examples/exposure-monitor && webpack-dev-server --inline --hot --config ../webpack.shared.config.js",
+    "exposure-monitor-build": "cd examples/exposure-monitor && webpack --inline --progress --colors --config ../webpack.shared.config.js",
     "counter-hot": "cd examples/counter-hot && webpack-dev-server --inline --hot --config ../webpack.shared.config.js",
     "todomvc": "cd examples/todomvc && webpack-dev-server --inline --hot --config ../webpack.shared.config.js",
     "cart": "cd examples/shopping-cart && webpack-dev-server --inline --hot --config ../webpack.shared.config.js",
