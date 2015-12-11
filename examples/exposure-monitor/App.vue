@@ -30,7 +30,7 @@ export default {
 	},
 	methods: {
 		imgLazyload: function(node) {
-			console.log('imgLazyload', node);
+			console.log('imgLazyload', node.nodeName);
 			var src = node.getAttribute('data-src');
 			if(src) {
 				node.removeAttribute('data-src');
@@ -38,7 +38,7 @@ export default {
 			}
 		},
 		exposureReport: function(node) {
-			console.log('exposureReport', node);
+			console.log('exposureReport', node.nodeName);
 		}
 	},
 	directives: {
@@ -78,7 +78,7 @@ export default {
 				var domUpdate = function() {
 					console.log('directives[exposure]: domUpdate opt: ', opt);
 					opt.arr = this.getDomNodes(opt);
-					this.debounceDealExposures();
+					this.throttleOncePerThresholdDealExposures();
 				};
 				
 				var unwatch = this.vm.$watch(opt.domUpdateTrigger, function() {
@@ -89,15 +89,17 @@ export default {
 
 				this.opts[opt.selector] = opt;
 				
+				console.log('directives[exposure]: bindEvent', arguments);
+
 				this.vm.$nextTick(function() {
 					domUpdate.call(that);
 				});
 			},
 			bind: function() {
-				console.log('directives[exposure]: bind', this, arguments);
+				console.log('directives[exposure]: bind', arguments);
 
-				this.debounceDealExposures = Util.debounce(this.dealExposures, 0);
-				this.throttleDealExposures = Util.throttle(this.dealExposures, 0);
+				this.throttleOncePerThresholdDealExposures = Util.throttle(this.dealExposures, 1, true);
+				this.throttleDealExposures = Util.throttle(this.dealExposures, 16);
 
 				var exposureOpt = this.params && this.params['exposureOpt'];
 				if (exposureOpt) {
@@ -120,10 +122,10 @@ export default {
 				window.addEventListener('resize', this.throttleDealExposures.bind(this), false);
 			},
 			update: function() {
-				console.log('directives[exposure]: update', this, arguments);
+				console.log('directives[exposure]: update', arguments);
 			},
 			unbind: function() {
-				console.log('directives[exposure]: unbind', this, arguments);
+				console.log('directives[exposure]: unbind', arguments);
 				window.removeEventListener('scroll', this.dispatchScrollEvt.bind(this), false);
 				for(var i = 0, length = this.watches.length, one; i < length && (one = this.watches[i]); i++) {
 					one();
