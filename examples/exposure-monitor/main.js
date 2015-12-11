@@ -1,9 +1,13 @@
 import Vue from 'vue'
+
 import App from './App.vue'
+import ExposureMonitor from './exposure-monitor.js'
 
-Vue.config.debug = true
+Vue.config.debug = true;
 
-window.test = new Vue({
+Vue.directive('exposure', ExposureMonitor);
+
+new Vue({
   el: 'body',
   components: { App }
 })
